@@ -1,0 +1,110 @@
+/* color: #081A51
+          #017EFA
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  background-color: #f3f3f3;
+}
+
+.header {
+  height: 15vh;
+  background-color: #0a2167;
+  font-size: 1.5rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  font-family: "Roboto Mono", monospace;
+}
+
+.header div {
+  margin: 0 1.5rem;
+}
+
+.header__new-array {
+  cursor: pointer;
+}
+
+.header--separator {
+  width: 4px;
+  background-color: #101010;
+  height: 55%;
+  position: relative;
+  bottom: -22px;
+}
+
+.header__algorithm-types {
+  display: flex;
+}
+
+.header__algorithm-types div {
+  cursor: pointer;
+}
+
+.header__algorithm-types div:hover,
+.header__new-array:hover {
+  color: #ddd9d9;
+}
+
+#array-size {
+  cursor: pointer;
+}
+
+.visualisation-box {
+  position: relative;
+  height: 84vh;
+  /* height: 80vh; à supprimer */
+}
+
+.array-container {
+  width: 100vw;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  font-size: 3rem;
+  height: auto;
+  /* border: 2px solid red; */
+  transform: rotateX(180deg);
+  margin-left: 0;
+}
+
+.array-element {
+  width: 8rem;
+  background-color: #017efa;
+  margin-left: 3px;
+  transform: rotatex(180deg);
+  user-select: none;
+
+  /* transition: all 0.5s; */
+}
+
+/*  */
+/* .array-container {
+  background-color: white;
+  height: 288px;
+  width: 598px;
+  margin: auto;
+  position: relative;
+  margin-top: 64px;
+} */
+
+.block {
+  width: 28px;
+  height: 5rem;
+  background-color: #6b5b95;
+  position: absolute;
+  bottom: 0px;
+  transition: 0.2s all ease;
+}
