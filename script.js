@@ -13,7 +13,7 @@ const bubbleSort = function (array) {
       }
     }
   }
-  console.log(array);
+  console.log("bubbleSort: ", array);
 };
 bubbleSort();
 
@@ -33,11 +33,47 @@ const quickSort = function (array) {
 
   return [...quickSort(leftArray), pivot, ...quickSort(rightArray)];
 };
-console.log(quickSort(unsortedArray));
-console.log(unsortedArray);
+console.log("quickSort: ", quickSort(unsortedArray));
 
 // Merge sort
 const mergeSort = function () {};
 
 // Heap Sort
-const heapSort = function () {};
+const heapify = function (array, length, parentIndex) {
+  let index = parentIndex;
+  let left = 2 * index + 1;
+  let right = 2 * index + 2;
+
+  if (left < length && array[left] > array[index]) index = left;
+
+  if (right < length && array[right] > array[index]) index = right;
+
+  if (index !== parentIndex) {
+    [array[parentIndex], array[index]] = [array[index], array[parentIndex]];
+
+    heapify(array, length, index);
+  }
+};
+
+const maxHeap = function (array) {
+  const length = array.length;
+  const middleIndex = Math.floor(array.length / 2 - 1);
+
+  for (let i = middleIndex; i >= 0; i--) {
+    heapify(array, length, i);
+  }
+};
+
+const heapSort = function (array) {
+  array = array.slice();
+  maxHeap(array);
+
+  for (let i = array.length - 1; i > 0; i--) {
+    [array[0], array[i]] = [array[i], array[0]];
+
+    heapify(array, i, 0);
+  }
+  return array;
+};
+console.log("heapSort: ", heapSort(unsortedArray));
+console.log("unsortedArray: ", unsortedArray);
