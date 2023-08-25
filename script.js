@@ -17,6 +17,22 @@ const bubbleSort = function (array) {
 };
 bubbleSort();
 
+// Selection Sort
+const selectionSort = function (array) {
+  for (let i = 0; i < array.length - 1; i++) {
+    let minIndex = i;
+
+    for (let j = i + 1; j < array.length; j++) {
+      if (array[j] < array[minIndex]) minIndex = j;
+    }
+
+    if (array[minIndex] !== array[i])
+      [array[i], array[minIndex]] = [array[minIndex], array[i]];
+  }
+  return array;
+};
+console.log("selectionSort: ", selectionSort(unsortedArray));
+
 // Quick Sort
 const quickSort = function (array) {
   if (array.length <= 1) {
@@ -41,8 +57,8 @@ const mergeSort = function () {};
 // Heap Sort
 const heapify = function (array, length, parentIndex) {
   let index = parentIndex;
-  let left = 2 * index + 1;
-  let right = 2 * index + 2;
+  let left = 2 * parentIndex + 1;
+  let right = 2 * parentIndex + 2;
 
   if (left < length && array[left] > array[index]) index = left;
 
@@ -75,5 +91,5 @@ const heapSort = function (array) {
   }
   return array;
 };
-console.log("heapSort: ", heapSort(unsortedArray));
+console.log("heapSort: ", heapSort([10, 80, 30, 90, 40, 50, 70]));
 console.log("unsortedArray: ", unsortedArray);
