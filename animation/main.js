@@ -1,5 +1,6 @@
 import bubbleSort from "./bubbleSort.js";
 import selectionSort from "./selectionSort.js";
+import insertionSort from "./insertionSort.js";
 import quickSort from "./quickSort.js";
 import heapSort from "./heapSort.js";
 import { giveColor } from "./helpers.js";
@@ -17,7 +18,7 @@ const btnMergeSort = document.querySelector(".merge-sort");
 const btnHeapSort = document.querySelector(".heap-sort");
 
 function generateArray(size = 78) {
-  // const array = [10, 80, 30, 90, 40, 50, 70];
+  // const array = [20, 80, 50, 30, 90, 40];
 
   const array = Array.from(
     { length: size },
@@ -53,18 +54,11 @@ createArray.addEventListener("click", function () {
   visualisationBox.innerHTML = "";
   generateArray(arrayElement.length);
 });
+////////////////////////////////////////////
 
-btnQuickSort.addEventListener("click", async function () {
-  const delay = 0.009;
-  const arrayElement = Array.from(document.querySelectorAll(".array-element"));
-
-  await quickSort(arrayElement, 0, arrayElement.length - 1, delay);
-
-  arrayElement.forEach((el) => giveColor(el, "#b88214"));
-});
-
+//
 btnBubbleSort.addEventListener("click", async function () {
-  const delay = 0.009;
+  const delay = 0.003;
   const arrayElement = Array.from(document.querySelectorAll(".array-element"));
 
   await bubbleSort(arrayElement, delay);
@@ -72,8 +66,28 @@ btnBubbleSort.addEventListener("click", async function () {
   arrayElement.forEach((el) => giveColor(el, "#b88214"));
 });
 
+//
+btnInsertionSort.addEventListener("click", async function () {
+  const delay = 0.003;
+  const arrayElement = Array.from(document.querySelectorAll(".array-element"));
+
+  await insertionSort(arrayElement, delay);
+
+  arrayElement.forEach((el) => giveColor(el, "#b88214"));
+});
+
+//
+btnQuickSort.addEventListener("click", async function () {
+  const delay = 0.003;
+  const arrayElement = Array.from(document.querySelectorAll(".array-element"));
+
+  await quickSort(arrayElement, 0, arrayElement.length - 1, delay);
+
+  arrayElement.forEach((el) => giveColor(el, "#b88214"));
+});
+
 btnHeapSort.addEventListener("click", async function () {
-  const delay = 0.009;
+  const delay = 0.003;
   const arrayElement = Array.from(document.querySelectorAll(".array-element"));
 
   await heapSort(arrayElement, delay);
@@ -81,7 +95,7 @@ btnHeapSort.addEventListener("click", async function () {
 });
 
 btnSelectionSort.addEventListener("click", async function () {
-  const delay = 0.0009;
+  const delay = 0.003;
   const arrayElement = Array.from(document.querySelectorAll(".array-element"));
 
   await selectionSort(arrayElement, delay);

@@ -19,6 +19,7 @@ bubbleSort();
 
 // Selection Sort
 const selectionSort = function (array) {
+  array = array.slice();
   for (let i = 0; i < array.length - 1; i++) {
     let minIndex = i;
 
@@ -32,6 +33,25 @@ const selectionSort = function (array) {
   return array;
 };
 console.log("selectionSort: ", selectionSort(unsortedArray));
+
+// Insertion Sort
+const insertionSort = function (array) {
+  array = array.slice();
+
+  for (let i = 1; i < array.length; i++) {
+    let currentElement = array[i];
+    let j = i - 1;
+
+    while (j >= 0 && array[j] > currentElement) {
+      array[j + 1] = array[j];
+      j = j - 1;
+    }
+    array[j + 1] = currentElement;
+    // currentElement = array[j + 1];
+  }
+  return array;
+};
+console.log("insertionSort: ", insertionSort(unsortedArray));
 
 // Quick Sort
 const quickSort = function (array) {
