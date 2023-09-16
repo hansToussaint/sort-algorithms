@@ -29,6 +29,7 @@ body {
 
 .header div {
   margin: 0 1.5rem;
+  user-select: none;
 }
 
 .header__new-array {
@@ -107,9 +108,4 @@ body {
   position: absolute;
   bottom: 0px;
   transition: 0.2s all ease;
-}
-
-.disable {
-  background-color: red;
-  pointer-events: none;
 }

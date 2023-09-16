@@ -3,21 +3,15 @@ import selectionSort from "./selectionSort.js";
 import insertionSort from "./insertionSort.js";
 import quickSort from "./quickSort.js";
 import heapSort from "./heapSort.js";
-import { giveColor, wait } from "./helpers.js";
+import { giveColor } from "./helpers.js";
 
 export const visualisationBox = document.querySelector(".visualisation-box");
 
+const headerElements = document.querySelector("header");
+const allSortTypes = document.querySelectorAll(".algo");
 const changeSize = document.getElementById("array-size");
 
 let delay;
-
-function disableOthers(element) {
-  element.classList.add("disable");
-}
-
-function enable(element) {
-  element.classList.remove("disable");
-}
 
 function generateArray(size = 78) {
   delay = 0.5 / size;
@@ -44,6 +38,50 @@ function generateArray(size = 78) {
 }
 generateArray();
 
+async function listener(sortType, targetElement, delay) {
+  allSortTypes.forEach((el) => {
+    if (el.id !== targetElement.id) {
+      el.style.color = "#f00";
+    }
+    el.style.pointerEvents = "none";
+  });
+
+  //
+  const arrayElement = Array.from(document.querySelectorAll(".array-element"));
+
+  await sortType(arrayElement, delay);
+
+  arrayElement.forEach((el) => giveColor(el, "#b88214"));
+  //
+
+  allSortTypes.forEach((el) => {
+    el.style.pointerEvents = "all";
+    el.style.color = "#fff";
+  });
+}
+
+async function listenerQuickSort(targetElement) {
+  allSortTypes.forEach((el) => {
+    if (el.id !== targetElement.id) {
+      el.style.color = "#f00";
+    }
+    el.style.pointerEvents = "none";
+  });
+
+  //
+  const arrayElement = Array.from(document.querySelectorAll(".array-element"));
+
+  await quickSort(arrayElement, 0, arrayElement.length - 1, delay);
+
+  arrayElement.forEach((el) => giveColor(el, "#b88214"));
+
+  //
+  allSortTypes.forEach((el) => {
+    el.style.pointerEvents = "all";
+    el.style.color = "#fff";
+  });
+}
+
 // Event handlers
 changeSize.addEventListener("input", function (e) {
   const size = Number(e.target.value);
@@ -54,25 +92,7 @@ changeSize.addEventListener("input", function (e) {
 
 ////////////////////////////////////////////
 
-async function listener(sortType, delay) {
-  const arrayElement = Array.from(document.querySelectorAll(".array-element"));
-
-  await sortType(arrayElement, delay);
-
-  arrayElement.forEach((el) => giveColor(el, "#b88214"));
-}
-
-async function listenerQuickSort() {
-  const arrayElement = Array.from(document.querySelectorAll(".array-element"));
-
-  await quickSort(arrayElement, 0, arrayElement.length - 1, delay);
-
-  arrayElement.forEach((el) => giveColor(el, "#b88214"));
-}
-
 //global
-const headerElements = document.querySelector("header");
-const allSortTypes = document.querySelectorAll(".algo");
 
 headerElements.addEventListener("click", function (e) {
   const createArray = e.target.closest(".header__new-array");
@@ -83,12 +103,6 @@ headerElements.addEventListener("click", function (e) {
   const btnQuickSort = e.target.closest(".quick-sort");
   const btnMergeSort = e.target.closest(".merge-sort");
   const btnHeapSort = e.target.closest(".heap-sort");
-
-  allSortTypes.forEach((el) => {
-    if (el.id !== e.target.id) {
-      el.classList.add("disable");
-    }
-  });
 
   // CREATE NEW ARRAY
   if (e.target === createArray) {
@@ -102,19 +116,19 @@ headerElements.addEventListener("click", function (e) {
 
   // SORT ALGORITMS
   if (e.target === btnBubbleSort) {
-    listener(bubbleSort, delay);
+    listener(bubbleSort, e.target, delay);
   }
 
   if (e.target === btnSelectionSort) {
-    listener(selectionSort, delay);
+    listener(selectionSort, e.target, delay);
   }
 
   if (e.target === btnInsertionSort) {
-    listener(insertionSort, delay);
+    listener(insertionSort, e.target, delay);
   }
 
   if (e.target === btnQuickSort) {
-    listenerQuickSort();
+    listenerQuickSort(e.target);
   }
 
   if (e.target === btnMergeSort) {
@@ -122,6 +136,6 @@ headerElements.addEventListener("click", function (e) {
   }
 
   if (e.target === btnHeapSort) {
-    listener(heapSort, delay);
+    listener(heapSort, e.target, delay);
   }
 });
