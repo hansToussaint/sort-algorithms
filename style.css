@@ -108,3 +108,8 @@ body {
   bottom: 0px;
   transition: 0.2s all ease;
 }
+
+.disable {
+  background-color: red;
+  pointer-events: none;
+}

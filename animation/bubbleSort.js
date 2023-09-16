@@ -1,8 +1,6 @@
 import { swap, wait, giveColor } from "./helpers.js";
 
-export default async function bubbleSort(array) {
-  const delay = 0.003;
-
+export default async function bubbleSort(array, delay) {
   for (let i = 0; i < array.length; i++) {
     for (let j = 0; j < array.length - i - 1; j++) {
       giveColor(array[j], "#c31b2a");

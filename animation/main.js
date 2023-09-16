@@ -3,21 +3,25 @@ import selectionSort from "./selectionSort.js";
 import insertionSort from "./insertionSort.js";
 import quickSort from "./quickSort.js";
 import heapSort from "./heapSort.js";
-import { giveColor } from "./helpers.js";
+import { giveColor, wait } from "./helpers.js";
 
 export const visualisationBox = document.querySelector(".visualisation-box");
 
-const createArray = document.querySelector(".header__new-array");
 const changeSize = document.getElementById("array-size");
 
-const btnBubbleSort = document.querySelector(".bubble-sort");
-const btnSelectionSort = document.querySelector(".selection-sort");
-const btnInsertionSort = document.querySelector(".insertion-sort");
-const btnQuickSort = document.querySelector(".quick-sort");
-const btnMergeSort = document.querySelector(".merge-sort");
-const btnHeapSort = document.querySelector(".heap-sort");
+let delay;
+
+function disableOthers(element) {
+  element.classList.add("disable");
+}
+
+function enable(element) {
+  element.classList.remove("disable");
+}
 
 function generateArray(size = 78) {
+  delay = 0.5 / size;
+
   // const array = [20, 80, 50, 30, 90, 40];
 
   const array = Array.from(
@@ -48,56 +52,76 @@ changeSize.addEventListener("input", function (e) {
   generateArray(size);
 });
 
-createArray.addEventListener("click", function () {
-  const arrayElement = Array.from(document.querySelectorAll(".array-element"));
-
-  visualisationBox.innerHTML = "";
-  generateArray(arrayElement.length);
-});
 ////////////////////////////////////////////
 
-//
-btnBubbleSort.addEventListener("click", async function () {
-  const delay = 0.003;
+async function listener(sortType, delay) {
   const arrayElement = Array.from(document.querySelectorAll(".array-element"));
 
-  await bubbleSort(arrayElement, delay);
+  await sortType(arrayElement, delay);
 
   arrayElement.forEach((el) => giveColor(el, "#b88214"));
-});
+}
 
-//
-btnInsertionSort.addEventListener("click", async function () {
-  const delay = 0.003;
-  const arrayElement = Array.from(document.querySelectorAll(".array-element"));
-
-  await insertionSort(arrayElement, delay);
-
-  arrayElement.forEach((el) => giveColor(el, "#b88214"));
-});
-
-//
-btnQuickSort.addEventListener("click", async function () {
-  const delay = 0.003;
+async function listenerQuickSort() {
   const arrayElement = Array.from(document.querySelectorAll(".array-element"));
 
   await quickSort(arrayElement, 0, arrayElement.length - 1, delay);
 
   arrayElement.forEach((el) => giveColor(el, "#b88214"));
-});
+}
 
-btnHeapSort.addEventListener("click", async function () {
-  const delay = 0.003;
-  const arrayElement = Array.from(document.querySelectorAll(".array-element"));
+//global
+const headerElements = document.querySelector("header");
+const allSortTypes = document.querySelectorAll(".algo");
 
-  await heapSort(arrayElement, delay);
-  arrayElement.forEach((el) => giveColor(el, "#b88214"));
-});
+headerElements.addEventListener("click", function (e) {
+  const createArray = e.target.closest(".header__new-array");
 
-btnSelectionSort.addEventListener("click", async function () {
-  const delay = 0.003;
-  const arrayElement = Array.from(document.querySelectorAll(".array-element"));
+  const btnBubbleSort = e.target.closest(".bubble-sort");
+  const btnSelectionSort = e.target.closest(".selection-sort");
+  const btnInsertionSort = e.target.closest(".insertion-sort");
+  const btnQuickSort = e.target.closest(".quick-sort");
+  const btnMergeSort = e.target.closest(".merge-sort");
+  const btnHeapSort = e.target.closest(".heap-sort");
 
-  await selectionSort(arrayElement, delay);
-  arrayElement.forEach((el) => giveColor(el, "#b88214"));
+  allSortTypes.forEach((el) => {
+    if (el.id !== e.target.id) {
+      el.classList.add("disable");
+    }
+  });
+
+  // CREATE NEW ARRAY
+  if (e.target === createArray) {
+    const arrayElement = Array.from(
+      document.querySelectorAll(".array-element")
+    );
+
+    visualisationBox.innerHTML = "";
+    generateArray(arrayElement.length);
+  }
+
+  // SORT ALGORITMS
+  if (e.target === btnBubbleSort) {
+    listener(bubbleSort, delay);
+  }
+
+  if (e.target === btnSelectionSort) {
+    listener(selectionSort, delay);
+  }
+
+  if (e.target === btnInsertionSort) {
+    listener(insertionSort, delay);
+  }
+
+  if (e.target === btnQuickSort) {
+    listenerQuickSort();
+  }
+
+  if (e.target === btnMergeSort) {
+    console.log("merge");
+  }
+
+  if (e.target === btnHeapSort) {
+    listener(heapSort, delay);
+  }
 });
